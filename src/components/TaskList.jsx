@@ -1,32 +1,18 @@
-import React from 'react';
-import UpdateTask from './UpdateTask';
-import { DeleteTask, DeleteAllTask } from './DeleteTask';
-import {
-  HStack,
-  Box,
-  VStack,
-  Flex,
-  Text,
-  StackDivider,
-  Center,
-} from '@chakra-ui/react';
-import Logo from './Logo';
-import { CalendarIcon, CheckIcon } from '@chakra-ui/icons';
+import { Box, VStack, Flex, StackDivider, Center } from '@chakra-ui/react';
+import { useTask } from '../contexts/TaskContext';
+import TaskItem from './TaskItem';
+import DeleteAll from './DeleteAll';
 
-export default function TaskList({
-  tasks,
-  updateTask,
-  deleteTask,
-  deleteTaskAll,
-  checkTask,
-}) {
+export default function TaskList() {
+  const { tasks } = useTask();
+
   if (!tasks.length) {
     return (
       <>
         <Box maxW='80%' p={10}>
           <Center>
             {' '}
-            <Logo />
+            <h2>Nothing to see here....</h2>
           </Center>
         </Box>
       </>
@@ -44,31 +30,13 @@ export default function TaskList({
         maxW={{ base: '90vw', sm: '80vw', lg: '50vw', xl: '30vw' }}
         alignItems='stretch'
       >
-        {tasks.map((task) => (
-          <HStack key={task.id} opacity={task.check == true ? '0.2' : '1'}>
-            {task.check ? <CheckIcon /> : <CalendarIcon />}
-            <Text
-              w='100%'
-              p='8px'
-              borderRadius='lg'
-              as={task.check == true ? 's' : ''}
-              cursor='pointer'
-              onClick={() => checkTask(task.id)}
-            >
-              {task.body}
-            </Text>
-            <DeleteTask
-              task={task}
-              deleteTask={deleteTask}
-              deleteTaskAll={deleteTaskAll}
-            />
-            <UpdateTask task={task} updateTask={updateTask} />
-          </HStack>
+        {tasks.map((task, index) => (
+          <TaskItem task={task} key={task.id} num={index + 1} />
         ))}
       </VStack>
 
       <Flex>
-        <DeleteAllTask deleteTaskAll={deleteTaskAll} />
+        <DeleteAll />
       </Flex>
     </>
   );

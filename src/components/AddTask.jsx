@@ -1,11 +1,17 @@
 import { useState } from 'react';
 import { Button, HStack, Input, useToast } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
-
-function AddTask({ addTask }) {
+import { addTaskToast } from '../utils/toast';
+import { useTask } from '../contexts/TaskContext';
+function AddTask() {
+  const { tasks, setTasks } = useTask();
   const toast = useToast();
   const [content, setContent] = useState('');
   const [statusInput, setStatusInput] = useState(true);
+
+  function addTask(task) {
+    setTasks([...tasks, task]);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -13,13 +19,7 @@ function AddTask({ addTask }) {
     const taskText = content.trim();
 
     if (!taskText) {
-      toast({
-        title: 'Add a task',
-        position: 'top',
-        status: 'warning',
-        duration: 2000,
-        isClosable: true,
-      });
+      toast(addTaskToast);
       setStatusInput(false);
 
       return setContent('');

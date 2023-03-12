@@ -1,3 +1,4 @@
+import { useState, useRef } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -11,16 +12,40 @@ import {
   FormControl,
   useDisclosure,
   IconButton,
+  useToast,
 } from '@chakra-ui/react';
-import { useState } from 'react';
-import React from 'react';
-import { FiTrash2, FiEdit } from 'react-icons/fi';
+import { useTask } from '../contexts/TaskContext';
+import { updateTaskToast } from '../utils/toast';
+import { FiEdit } from 'react-icons/fi';
 
-function UpdateTask({ task, updateTask }) {
+export default function UpdateTask({ task }) {
+  const { tasks, setTasks } = useTask();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [body, setBody] = useState('');
+  const initialRef = useRef();
+  const toast = useToast();
 
-  const initialRef = React.useRef();
+  function updateTask(id, body, onClose) {
+    const info = body.trim();
+
+    if (!info) {
+      toast(updateTaskToast);
+
+      return;
+    }
+
+    const newTasksUpdate = tasks.map((task) => {
+      if (task.id === id) {
+        task.body = body;
+        task.check = false;
+      }
+      return task;
+    });
+
+    setTasks(newTasksUpdate);
+
+    onClose();
+  }
 
   return (
     <>
@@ -33,7 +58,7 @@ function UpdateTask({ task, updateTask }) {
       >
         <ModalOverlay />
         <ModalContent w='90%'>
-          <ModalHeader>Update task </ModalHeader>
+          <ModalHeader>Update task</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
             <FormControl>
@@ -63,5 +88,3 @@ function UpdateTask({ task, updateTask }) {
     </>
   );
 }
-
-export default UpdateTask;
