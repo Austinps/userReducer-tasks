@@ -35,6 +35,7 @@ export default function NavBar() {
           h={12}
           src='https://dev-to-uploads.s3.amazonaws.com/uploads/logos/resized_logo_UQww2soKuUsjaOGNB38o.png'
         />
+
         <Input
           maxW='26rem'
           placeholder='Search...'
@@ -42,15 +43,16 @@ export default function NavBar() {
           borderRadius='5px'
           d={{ base: 'none', md: 'block' }}
         />
-        <Spacer />
+
         <Button
-          color='#fff'
-          rounded='md'
-          bg='#3b49df'
-          _hover={{ bg: '#323ebe' }}
+        // color='#fff'
+        // rounded='md'
+        // bg='#3b49df'
+        // _hover={{ bg: '#323ebe' }}
         >
           Create List
         </Button>
+        <Spacer />
         <HStack spacing={3}>
           {authUser ? <ProfileMenu /> : <ProfileMenu />}
           <Spacer />
