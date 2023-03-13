@@ -3,35 +3,29 @@ import { Button, HStack, Input, useToast } from '@chakra-ui/react';
 import { nanoid } from 'nanoid';
 import { addTaskToast } from '../utils/toast';
 import { useTask } from '../contexts/TaskContext';
+import { ACTIONS } from '../contexts/TaskReducer';
+
 function AddTask() {
-  const { tasks, setTasks } = useTask();
+  const { tasks, dispatch } = useTask();
   const toast = useToast();
   const [content, setContent] = useState('');
   const [statusInput, setStatusInput] = useState(true);
 
-  function addTask(task) {
-    setTasks([...tasks, task]);
+  function addTask(content) {
+    if (!content) {
+      toast(addTaskToast);
+      setStatusInput(false);
+      return setContent('');
+    }
+    dispatch({
+      type: ACTIONS.ADD,
+      payload: { id: nanoid(), body: content.trim() },
+    });
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    const taskText = content.trim();
-
-    if (!taskText) {
-      toast(addTaskToast);
-      setStatusInput(false);
-
-      return setContent('');
-    }
-
-    const task = {
-      id: nanoid(),
-      body: taskText,
-      check: false,
-    };
-
-    addTask(task);
+    addTask(content);
     setContent('');
   }
 

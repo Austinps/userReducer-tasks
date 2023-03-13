@@ -8,10 +8,11 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useTask } from '../contexts/TaskContext';
+import { ACTIONS } from '../contexts/TaskReducer';
 
 export default function DeleteAll() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setTasks } = useTask();
+  const { setTasks, dispatch } = useTask();
 
   return (
     <>
@@ -27,7 +28,10 @@ export default function DeleteAll() {
             <Button mr={3} onClick={onClose}>
               No
             </Button>
-            <Button colorScheme='blue' onClick={() => setTasks([])}>
+            <Button
+              colorScheme='blue'
+              onClick={() => dispatch({ type: ACTIONS.DELETE_ALL })}
+            >
               Yes
             </Button>
           </ModalFooter>

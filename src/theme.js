@@ -31,10 +31,9 @@ const theme = extendTheme({
           bg: props.colorMode === 'dark' ? 'red.300' : 'red.500',
         }),
         // 5. We can add responsive variants
-        sm: {
-          bg: 'purple.500',
-          fontSize: 'md',
-        },
+        sm: (props) => ({
+          bg: props.colorMode === 'dark' ? 'gray' : 'green.300',
+        }),
       },
       // 6. We can overwrite defaultProps
       defaultProps: {

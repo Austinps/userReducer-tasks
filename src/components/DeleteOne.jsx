@@ -12,15 +12,14 @@ import {
 } from '@chakra-ui/react';
 import { FiTrash2 } from 'react-icons/fi';
 import { useTask } from '../contexts/TaskContext';
+import { ACTIONS } from '../contexts/TaskReducer';
 
 export default function DeleteOne({ task }) {
-  const { tasks, setTasks } = useTask();
+  const { tasks, dispatch } = useTask();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   function deleteTask(id) {
-    const newTasks = tasks.filter((task) => task.id !== id);
-    console.log('new', newTasks);
-    setTasks([...newTasks]);
+    dispatch({ type: ACTIONS.DELETE_ONE, payload: { id } });
   }
 
   return (

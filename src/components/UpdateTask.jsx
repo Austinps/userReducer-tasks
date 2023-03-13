@@ -15,36 +15,20 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import { useTask } from '../contexts/TaskContext';
+import { ACTIONS } from '../contexts/TaskReducer';
 import { updateTaskToast } from '../utils/toast';
 import { FiEdit } from 'react-icons/fi';
 
 export default function UpdateTask({ task }) {
-  const { tasks, setTasks } = useTask();
+  const { tasks, dispatch } = useTask();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [body, setBody] = useState('');
   const initialRef = useRef();
   const toast = useToast();
 
-  function updateTask(id, body, onClose) {
-    const info = body.trim();
-
-    if (!info) {
-      toast(updateTaskToast);
-
-      return;
-    }
-
-    const newTasksUpdate = tasks.map((task) => {
-      if (task.id === id) {
-        task.body = body;
-        task.check = false;
-      }
-      return task;
-    });
-
-    setTasks(newTasksUpdate);
-
-    onClose();
+  function updateTask(id, body) {
+    if (!body) return toast(updateTaskToast);
+    dispatch({ type: ACTIONS.UPDATE, payload: { id, body } });
   }
 
   return (
@@ -78,7 +62,7 @@ export default function UpdateTask({ task }) {
             </Button>
             <Button
               colorScheme='blue'
-              onClick={() => updateTask(task.id, body, onClose)}
+              onClick={() => updateTask(task.id, body)}
             >
               Save
             </Button>

@@ -2,20 +2,14 @@ import { HStack, Text } from '@chakra-ui/react';
 import DeleteOne from './DeleteOne';
 import UpdateTask from './UpdateTask';
 import { useTask } from '../contexts/TaskContext';
+import { ACTIONS } from '../contexts/TaskReducer';
 import { CalendarIcon, CheckIcon } from '@chakra-ui/icons';
 
 function TaskItem({ task, num }) {
-  const { tasks, setTasks } = useTask();
+  const { tasks, dispatch } = useTask();
 
-  function checkTask(id) {
-    const newTasksCheck = tasks.map((item) => {
-      if (item.id === id) {
-        item.check = !item.check;
-      }
-      return item;
-    });
-
-    setTasks(newTasksCheck);
+  function checkTask(todoId) {
+    dispatch({ type: ACTIONS.TOGGLE, payload: { id: todoId } });
   }
 
   return (

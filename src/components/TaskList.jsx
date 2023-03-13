@@ -30,9 +30,11 @@ export default function TaskList() {
         maxW={{ base: '90vw', sm: '80vw', lg: '50vw', xl: '30vw' }}
         alignItems='stretch'
       >
-        {tasks.map((task, index) => (
-          <TaskItem task={task} key={task.id} num={index + 1} />
-        ))}
+        {tasks.length > 0
+          ? tasks?.map((task, index) => (
+              <TaskItem task={task} key={task.id} num={index + 1} />
+            ))
+          : null}
       </VStack>
 
       <Flex>
