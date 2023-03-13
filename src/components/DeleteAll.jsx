@@ -14,6 +14,11 @@ export default function DeleteAll() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { setTasks, dispatch } = useTask();
 
+  function deleteAllHandler() {
+    dispatch({ type: ACTIONS.DELETE_ALL });
+    onClose();
+  }
+
   return (
     <>
       <Button colorScheme='gray' mt='8' onClick={onOpen}>
@@ -28,10 +33,7 @@ export default function DeleteAll() {
             <Button mr={3} onClick={onClose}>
               No
             </Button>
-            <Button
-              colorScheme='blue'
-              onClick={() => dispatch({ type: ACTIONS.DELETE_ALL })}
-            >
+            <Button colorScheme='blue' onClick={deleteAllHandler}>
               Yes
             </Button>
           </ModalFooter>

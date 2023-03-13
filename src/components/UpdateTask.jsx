@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Modal,
   ModalOverlay,
@@ -20,26 +20,27 @@ import { updateTaskToast } from '../utils/toast';
 import { FiEdit } from 'react-icons/fi';
 
 export default function UpdateTask({ task }) {
-  const { tasks, dispatch } = useTask();
+  const { dispatch } = useTask();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [body, setBody] = useState('');
-  const initialRef = useRef();
   const toast = useToast();
 
+  useEffect(() => setBody(task.body), []);
+  const handleChange = (e) => setBody(e.target.value);
+
   function updateTask(id, body) {
+    onClose();
     if (!body) return toast(updateTaskToast);
-    dispatch({ type: ACTIONS.UPDATE, payload: { id, body } });
+    dispatch({
+      type: ACTIONS.UPDATE,
+      payload: { id, body },
+    });
   }
 
   return (
     <>
       <IconButton icon={<FiEdit />} isRound='true' onClick={onOpen} />
-      <Modal
-        isCentered
-        initialFocusRef={initialRef}
-        isOpen={isOpen}
-        onClose={onClose}
-      >
+      <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent w='90%'>
           <ModalHeader>Update task</ModalHeader>
@@ -47,20 +48,25 @@ export default function UpdateTask({ task }) {
           <ModalBody pb={6}>
             <FormControl>
               <Input
-                ref={initialRef}
                 placeholder='Add task'
-                defaultValue={task.body}
-                onChange={(e) => setBody(e.target.value)}
-                onFocus={(e) => setBody(e.target.value)}
+                defaultValue={body}
+                onChange={handleChange}
+                onFocus={handleChange}
               />
             </FormControl>
           </ModalBody>
 
           <ModalFooter>
-            <Button mr={3} onClick={onClose}>
+            <Button
+              variant='outline'
+              colorScheme='gray'
+              mr={3}
+              onClick={onClose}
+            >
               Cancel
             </Button>
             <Button
+              variant='outline'
               colorScheme='blue'
               onClick={() => updateTask(task.id, body)}
             >

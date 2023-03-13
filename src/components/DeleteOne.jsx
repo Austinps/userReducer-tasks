@@ -17,9 +17,12 @@ import { ACTIONS } from '../contexts/TaskReducer';
 export default function DeleteOne({ task }) {
   const { tasks, dispatch } = useTask();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   function deleteTask(id) {
-    dispatch({ type: ACTIONS.DELETE_ONE, payload: { id } });
+    dispatch({ type: ACTIONS.DELETE, payload: { id } });
+  }
+  function handleDelete() {
+    deleteTask(task.id);
+    onClose();
   }
 
   return (
@@ -37,10 +40,7 @@ export default function DeleteOne({ task }) {
             <Button mr={3} onClick={onClose}>
               No
             </Button>
-            <Button
-              colorScheme='blue'
-              onClick={() => deleteTask(task.id, onClose)}
-            >
+            <Button colorScheme='blue' onClick={handleDelete}>
               Yes
             </Button>
           </ModalFooter>

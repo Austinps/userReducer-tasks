@@ -5,11 +5,11 @@ import { useTask } from '../contexts/TaskContext';
 import { ACTIONS } from '../contexts/TaskReducer';
 import { CalendarIcon, CheckIcon } from '@chakra-ui/icons';
 
-function TaskItem({ task, num }) {
+function TaskItem({ task }) {
   const { tasks, dispatch } = useTask();
 
-  function checkTask(todoId) {
-    dispatch({ type: ACTIONS.TOGGLE, payload: { id: todoId } });
+  function checkTask(id) {
+    dispatch({ type: ACTIONS.TOGGLE, payload: { id, check: !task.check } });
   }
 
   return (
@@ -23,7 +23,7 @@ function TaskItem({ task, num }) {
         cursor='pointer'
         onClick={() => checkTask(task.id)}
       >
-        {num}. {task.body}
+        {task.body}
       </Text>
       <DeleteOne task={task} />
       <UpdateTask task={task} />

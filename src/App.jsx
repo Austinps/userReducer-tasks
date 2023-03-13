@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Heading, VStack } from '@chakra-ui/react';
 import { TaskList, AddTask } from './components';
 import { useTask } from './contexts/TaskContext';
-
+  
 export default function App() {
   const { tasks } = useTask();
   useEffect(() => {
