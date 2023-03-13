@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import { TaskProvider } from './contexts/TaskContext';
 import Layout from './components/Layout';
@@ -11,9 +12,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <ChakraProvider theme={theme}>
       <TaskProvider>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <Layout>
-          <App />
-        </Layout>
+        <BrowserRouter>
+          <Layout>
+            <App />
+          </Layout>
+        </BrowserRouter>
       </TaskProvider>
     </ChakraProvider>
   </React.StrictMode>

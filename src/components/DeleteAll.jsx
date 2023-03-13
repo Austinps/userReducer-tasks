@@ -22,13 +22,13 @@ export default function DeleteAll() {
   return (
     <>
       <Button colorScheme='gray' mt='8' onClick={onOpen}>
-        Delete All
+        Clear
       </Button>
 
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent w='90%'>
-          <ModalHeader>Are you sure?</ModalHeader>
+          <ModalHeader>Are you sure you want to delete all items?</ModalHeader>
           <ModalFooter>
             <Button mr={3} onClick={onClose}>
               No
