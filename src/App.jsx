@@ -12,9 +12,8 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path='/' element={<Home />} />
       <Route
-        path='/new'
+        path='/'
         element={
           <VStack p={4} minH='100vh' pb={28}>
             <Heading p='5' fontWeight='extrabold' size='xl'>

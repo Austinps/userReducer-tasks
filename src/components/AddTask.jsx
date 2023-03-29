@@ -44,7 +44,19 @@ function AddTask() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <Button colorScheme='blue' px='8' pl='10' pr='10' h='46' type='submit'>
+        <Button
+          h={12}
+          px={6}
+          bgGradient='linear(to-br, #228be6, #15aabf)'
+          color='white'
+          _hover={{ bgGradient: 'linear(to-br, #228be6, #228be6)' }}
+          variant='solid'
+          size='lg'
+          rounded='md'
+          fontWeight='bold'
+          mb={{ base: 2, sm: 0 }}
+          type='submit'
+        >
           Add
         </Button>
       </HStack>

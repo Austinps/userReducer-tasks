@@ -21,26 +21,6 @@ export default function NavBar() {
   return (
     <Container maxW='1280px' px={4}>
       <HStack spacing={4}>
-        <NavLink to='/'>
-          <Image
-            alt='logo'
-            w={'auto'}
-            h={12}
-            src='https://dev-to-uploads.s3.amazonaws.com/uploads/logos/resized_logo_UQww2soKuUsjaOGNB38o.png'
-          />
-        </NavLink>
-
-        <Input
-          maxW='26rem'
-          placeholder='Search lists...'
-          borderColor={useColorModeValue('gray.300', 'white')}
-          borderRadius='5px'
-          d={{ base: 'none', md: 'block' }}
-        />
-
-        <Button>
-          <NavLink to='/new'>Create List</NavLink>
-        </Button>
         <Spacer />
         <HStack spacing={3}>
           {authUser ? <ProfileMenu /> : <ProfileMenu />}
