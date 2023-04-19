@@ -1,9 +1,12 @@
-import { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 import taskReducer from './TaskReducer';
 
-const taskContext = createContext([{}, () => {}]);
+const taskContext = createContext({
+  tasks: [],
+  dispatch: () => {},
+});
 
-export const TaskProvider = ({ children }) => {
+export const TaskProvider = React.memo(({ children }) => {
   const [tasks, dispatch] = useReducer(taskReducer, []);
 
   return (
@@ -11,6 +14,6 @@ export const TaskProvider = ({ children }) => {
       {children}
     </taskContext.Provider>
   );
-};
+});
 
 export const useTask = () => useContext(taskContext);

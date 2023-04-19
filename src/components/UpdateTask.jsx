@@ -13,6 +13,7 @@ import {
   useDisclosure,
   IconButton,
   useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { useTask } from '../contexts/TaskContext';
 import { ACTIONS } from '../contexts/TaskReducer';
@@ -22,20 +23,42 @@ import { FiEdit } from 'react-icons/fi';
 export default function UpdateTask({ task }) {
   const { dispatch } = useTask();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [body, setBody] = useState('');
+  const [body, setBody] = useState(task.body);
+  const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
-  useEffect(() => setBody(task.body), []);
-  const handleChange = (e) => setBody(e.target.value);
+  useEffect(() => {
+    setBody(task.body);
+  }, [task]);
 
-  function updateTask(id, body) {
+  const handleChange = (e) => {
+    setBody(e.target.value);
+  };
+
+  const handleUpdate = async () => {
+    setIsLoading(true);
     onClose();
-    if (!body) return toast(updateTaskToast);
-    dispatch({
-      type: ACTIONS.UPDATE,
-      payload: { id, body },
-    });
-  }
+    if (!validateTaskBody(body)) {
+      toast(updateTaskToast);
+      setIsLoading(false);
+      return;
+    }
+    try {
+      await dispatch({ type: ACTIONS.UPDATE, payload: { id: task.id, body } });
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: 'An error occurred while updating the task',
+        status: 'error',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const validateTaskBody = (body) => {
+    return body.trim().length > 0;
+  };
 
   return (
     <>
@@ -49,9 +72,8 @@ export default function UpdateTask({ task }) {
             <FormControl>
               <Input
                 placeholder='Add task'
-                defaultValue={body}
+                value={body}
                 onChange={handleChange}
-                onFocus={handleChange}
               />
             </FormControl>
           </ModalBody>
@@ -62,15 +84,17 @@ export default function UpdateTask({ task }) {
               colorScheme='gray'
               mr={3}
               onClick={onClose}
+              disabled={isLoading}
             >
               Cancel
             </Button>
             <Button
               variant='outline'
               colorScheme='blue'
-              onClick={() => updateTask(task.id, body)}
+              onClick={handleUpdate}
+              disabled={isLoading}
             >
-              Save
+              {isLoading ? <Spinner size='sm' /> : 'Save'}
             </Button>
           </ModalFooter>
         </ModalContent>

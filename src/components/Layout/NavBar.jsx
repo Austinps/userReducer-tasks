@@ -1,40 +1,49 @@
 import { NavLink } from 'react-router-dom';
 import {
-  Container,
+  Box,
   IconButton,
-  Button,
-  HStack,
-  Image,
-  Input,
-  Spacer,
-  useColorModeValue,
-  useColorMode,
+  Flex,
   Link,
+  useColorMode,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import ProfileMenu from './ProfileMenu';
 import { useAuth } from '../../contexts/UserContext';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 export default function NavBar() {
-  const { authUser } = useAuth();
+  const { currentUser } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <Container maxW='1280px' px={4}>
-      <HStack spacing={4}>
-        <Spacer />
-        <HStack spacing={3}>
-          {authUser ? <ProfileMenu /> : <ProfileMenu />}
 
-          <Spacer />
+  return (
+    <Box
+      as='nav'
+      borderBottom='1px'
+      borderColor={useColorModeValue('gray.200', 'gray.700')}
+      py={2}
+    >
+      <Flex
+        alignItems='center'
+        justifyContent='space-between'
+        maxW='1280px'
+        mx='auto'
+        px={4}
+      >
+        <Link as={NavLink} to='/' fontWeight='bold' fontSize='lg'>
+          Task
+        </Link>
+        <Flex alignItems='center'>
+          {currentUser && <ProfileMenu />}
           <IconButton
             icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
-            isRound='true'
+            isRound
             size='md'
             alignSelf='flex-end'
+            ml={currentUser ? 3 : 0}
             onClick={toggleColorMode}
           />
-        </HStack>
-      </HStack>
-    </Container>
+        </Flex>
+      </Flex>
+    </Box>
   );
 }

@@ -6,7 +6,7 @@ export const ACTIONS = {
   DELETE_ALL: 'DELETE_ALL',
 };
 
-export default function taskReducer(tasks, { type, payload }) {
+const taskReducer = (tasks = [], { type, payload }) => {
   switch (type) {
     case ACTIONS.ADD:
       return [...tasks, { ...payload, check: false }];
@@ -35,4 +35,6 @@ export default function taskReducer(tasks, { type, payload }) {
     default:
       throw new Error(`No action found for ${type}.`);
   }
-}
+};
+
+export default taskReducer;

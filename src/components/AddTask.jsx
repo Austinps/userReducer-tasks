@@ -6,30 +6,23 @@ import { useTask } from '../contexts/TaskContext';
 import { ACTIONS } from '../contexts/TaskReducer';
 
 function AddTask() {
-  const { tasks, dispatch } = useTask();
+  const { dispatch } = useTask();
   const toast = useToast();
   const [content, setContent] = useState('');
   const [statusInput, setStatusInput] = useState(true);
 
-  function addTask(content) {
-    if (!content) {
-      toast(addTaskToast);
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!content?.trim()) {
       setStatusInput(false);
-      return setContent('');
+      setContent('');
+      return toast(addTaskToast);
     }
     dispatch({
       type: ACTIONS.ADD,
       payload: { id: nanoid(), body: content.trim() },
     });
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    addTask(content);
     setContent('');
-  }
-
-  if (content && !statusInput) {
     setStatusInput(true);
   }
 
@@ -37,7 +30,6 @@ function AddTask() {
     <form onSubmit={handleSubmit}>
       <HStack mt='4' mb='4'>
         <Input
-          h='46'
           borderColor={!statusInput ? 'red.300' : 'transparent'}
           variant='filled'
           placeholder='add task'
@@ -45,16 +37,12 @@ function AddTask() {
           onChange={(e) => setContent(e.target.value)}
         />
         <Button
-          h={12}
-          px={6}
           bgGradient='linear(to-br, #228be6, #15aabf)'
           color='white'
           _hover={{ bgGradient: 'linear(to-br, #228be6, #228be6)' }}
           variant='solid'
           size='lg'
-          rounded='md'
           fontWeight='bold'
-          mb={{ base: 2, sm: 0 }}
           type='submit'
         >
           Add

@@ -22,19 +22,19 @@ export default function DeleteAll() {
   return (
     <>
       <Button colorScheme='gray' mt='8' onClick={onOpen}>
-        Clear
+        Clear All
       </Button>
 
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent w='90%'>
-          <ModalHeader>Are you sure you want to delete all items?</ModalHeader>
+          <ModalHeader>Are you sure?</ModalHeader>
           <ModalFooter>
             <Button mr={3} onClick={onClose}>
-              No
+              Cancel
             </Button>
             <Button colorScheme='blue' onClick={deleteAllHandler}>
-              Yes
+              Confirm
             </Button>
           </ModalFooter>
         </ModalContent>

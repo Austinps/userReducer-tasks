@@ -17,9 +17,11 @@ import { ACTIONS } from '../contexts/TaskReducer';
 export default function DeleteOne({ task }) {
   const { tasks, dispatch } = useTask();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   function deleteTask(id) {
     dispatch({ type: ACTIONS.DELETE, payload: { id } });
   }
+
   function handleDelete() {
     deleteTask(task.id);
     onClose();

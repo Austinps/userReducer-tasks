@@ -1,29 +1,19 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Heading, VStack } from '@chakra-ui/react';
-import { TaskList, AddTask } from './components';
+
 import { useTask } from './contexts/TaskContext';
-import Home from './views/Home';
+import { useTaskStorage } from '../hooks/useTaskStorage';
+import { Home, Profile, TaskLists } from './views';
+
 export default function App() {
   const { tasks } = useTask();
-  useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-  }, [tasks]);
+  useTaskStorage(tasks);
 
   return (
     <Routes>
-      <Route
-        path='/'
-        element={
-          <VStack p={4} minH='100vh' pb={28}>
-            <Heading p='5' fontWeight='extrabold' size='xl'>
-              Task List
-            </Heading>
-            <AddTask />
-            <TaskList />
-          </VStack>
-        }
-      />
+      <Route path='/' element={<Home />} />
+      <Route path='/profile' element={<Profile />} />
+      <Route path='/task-lists' element={<TaskLists />} />
     </Routes>
   );
 }
