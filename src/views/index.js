@@ -1,3 +1,3 @@
 export { default as Home } from './Home';
 export { default as Profile } from './Profile';
-export { default as TaskLists } from './TaskLists';
+export { default as UserLists } from './UserLists';
