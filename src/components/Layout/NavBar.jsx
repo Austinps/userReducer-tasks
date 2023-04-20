@@ -8,11 +8,9 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 import ProfileMenu from './ProfileMenu';
-import { useAuth } from '../../contexts/UserContext';
 import { FaSun, FaMoon } from 'react-icons/fa';
 
 export default function NavBar() {
-  const { currentUser } = useAuth();
   const { colorMode, toggleColorMode } = useColorMode();
 
   return (
@@ -33,13 +31,13 @@ export default function NavBar() {
           Task
         </Link>
         <Flex alignItems='center'>
-          {currentUser && <ProfileMenu />}
+          <ProfileMenu />
           <IconButton
             icon={colorMode === 'light' ? <FaSun /> : <FaMoon />}
             isRound
             size='md'
             alignSelf='flex-end'
-            ml={currentUser ? 3 : 0}
+            ml={3}
             onClick={toggleColorMode}
           />
         </Flex>
