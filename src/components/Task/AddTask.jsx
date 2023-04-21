@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
-import { Button, HStack, Input, Spinner, useToast } from '@chakra-ui/react';
+import { HStack, useToast } from '@chakra-ui/react';
 import { addTask } from '../../store/taskActions';
 import { useTask } from '../../contexts/TaskContext';
 import { useActiveList } from '../../contexts/activeListContext';
 import { addToastConfig } from '../../utils/toastConfig';
-import TextField from '../List/TextField';
+import TextField from '../Modal/TextField';
 import SubmitButton from '../SubmitButton';
 
 function AddTask() {

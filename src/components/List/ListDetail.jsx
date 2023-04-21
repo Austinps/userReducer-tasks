@@ -1,8 +1,7 @@
 import { AddTask, TaskList } from '..';
 import { useTask } from '../../contexts/TaskContext';
 import { useActiveList } from '../../contexts/activeListContext';
-import PropTypes from 'prop-types';
-import UpdateListForm from '../List/UpdateListForm';
+import UpdateListForm from './UpdateListForm';
 
 export default function ListDetail() {
   const { tasks } = useTask();
@@ -20,7 +19,3 @@ export default function ListDetail() {
     <h2>no lists yet</h2>
   );
 }
-
-ListDetail.propTypes = {
-  activeListId: PropTypes.string.isRequired,
-};

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { useTask } from '../../contexts/TaskContext';
 import { useActiveList } from '../../contexts/activeListContext';
 import { deleteTask } from '../../store/taskActions';
-import ModalDialog from '../ModalDialog';
+import ModalDialog from '../Modal/ModalDialog';
 import { deleteToastConfig } from '../../utils/toastConfig';
 
 export default function DeleteTask({ task }) {

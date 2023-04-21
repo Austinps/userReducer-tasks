@@ -1,15 +1,13 @@
 import { useEffect } from 'react';
 import { useDisclosure, IconButton } from '@chakra-ui/react';
 import { FiEdit } from 'react-icons/fi';
-import ModalDialog from '../ModalDialog';
-import { useActiveList } from '../../contexts/activeListContext';
-import TextField from './TextField';
-import TypeField from './TypeField';
+import ModalDialog from '../Modal/ModalDialog';
+import TextField from '../Modal/TextField';
+import TypeField from '../Modal/TypeField';
 import useUpdateListForm from '../../hooks/useUpdateListForm';
 import { INITIAL_STATE_TYPE, UPDATE_LIST_HEADER } from '../../utils/constants';
 
 export default function UpdateList({ list }) {
-  const { setActiveListId } = useActiveList();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isLoading,

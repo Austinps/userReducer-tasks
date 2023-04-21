@@ -4,8 +4,9 @@ import { useActiveList } from '../contexts/activeListContext';
 import { useEffect } from 'react';
 import UpdateListForm from '../components/List/UpdateListForm';
 import { AddTask, TaskList } from '../components';
+import PageHeader from '../components/PageHeader';
 
-export default function ListById() {
+export default function ListDetail() {
   const { id } = useParams();
   const { tasks } = useTask();
   const { setActiveListId } = useActiveList();
@@ -19,6 +20,7 @@ export default function ListById() {
 
   return list ? (
     <>
+      <PageHeader headertext={list.name} />
       <UpdateListForm list={list} />
       <AddTask />
       <TaskList tasks={list.tasks} />

@@ -11,7 +11,6 @@ export default function ListItem({ list }) {
   return (
     <Box>
       <Link to={`/lists/${list.id}`}>
-        {' '}
         <Text fontSize='xl' fontWeight='bold'>
           {list.name}
         </Text>
@@ -19,9 +18,9 @@ export default function ListItem({ list }) {
       <Text>Total Tasks: {totalTasks}</Text>
       <Text>Completed Tasks: {completedTasks}</Text>
       <Progress
-        value={(completedTasks / totalTasks) * 100}
+        value={totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0}
         size='sm'
-        colorScheme='green'
+        colorScheme={'green'}
         mt={2}
         mb={2}
       />

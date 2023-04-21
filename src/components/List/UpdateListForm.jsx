@@ -1,9 +1,9 @@
 import { useDisclosure } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import ModalDialog from '../ModalDialog';
-import TextField from './TextField';
-import TypeField from './TypeField';
+import ModalDialog from '../Modal/ModalDialog';
+import TextField from '../Modal/TextField';
+import TypeField from '../Modal/TypeField';
 import { INITIAL_STATE_TYPE, UPDATE_LIST_HEADER } from '../../utils/constants';
 import useUpdateListForm from '../../hooks/useUpdateListForm';
 import ListHeader from '../ListHeader';

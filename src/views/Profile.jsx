@@ -1,11 +1,9 @@
-import { Heading } from '@chakra-ui/react';
+import PageHeader from '../components/PageHeader';
 
 export default function Profile() {
   return (
     <>
-      <Heading p='5' fontWeight='extrabold' size='xl'>
-        Profile
-      </Heading>
+      <PageHeader headertext={'Your Profile'} />
       {/* Add any additional content for the profile page here */}
     </>
   );

@@ -40,7 +40,12 @@ export const deleteTask = (listId, taskId) => ({
   payload: { listId, taskId },
 });
 
-export const clearList = ({ id }) => ({
+export const deleteDoneTasks = (listId) => ({
+  type: ACTIONS.DELETE_DONE_TASKS,
+  payload: { listId },
+});
+
+export const deleteAllTasks = (listId) => ({
   type: ACTIONS.DELETE_ALL_TASKS,
-  payload: { id },
+  payload: { listId },
 });

@@ -4,7 +4,7 @@ import { FiTrash2 } from 'react-icons/fi';
 import PropTypes from 'prop-types';
 import { useTask } from '../../contexts/TaskContext';
 import { deleteList } from '../../store/taskActions';
-import ModalDialog from '../ModalDialog';
+import ModalDialog from '../Modal/ModalDialog';
 import { deleteToastConfig } from '../../utils/toastConfig';
 
 export default function DeleteList({ list }) {

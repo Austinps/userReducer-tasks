@@ -1,17 +1,26 @@
 import { useState } from 'react';
-import { Button, useDisclosure, useToast } from '@chakra-ui/react';
-import ModalDialog from '../ModalDialog';
+import { Button, Text, useDisclosure, useToast } from '@chakra-ui/react';
+import ModalDialog from '../Modal/ModalDialog';
 import { deleteToastConfig } from '../../utils/toastConfig';
+import { useTask } from '../../contexts/TaskContext';
+import { useActiveList } from '../../contexts/activeListContext';
+import { FiTrash2 } from 'react-icons/fi';
 
-export default function DeleteAll({ deleteAllHandler }) {
+export default function DeleteMultipleTasks({
+  action,
+  buttonText,
+  headerText,
+}) {
+  const { dispatch } = useTask();
+  const { activeListId } = useActiveList();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleDeleteAll() {
+  async function handleDelete() {
     setIsLoading(true);
     try {
-      await deleteAllHandler();
+      await dispatch(action(activeListId));
       toast(deleteToastConfig.success);
       onClose();
     } catch (err) {
@@ -25,18 +34,19 @@ export default function DeleteAll({ deleteAllHandler }) {
   return (
     <>
       <Button colorScheme='gray' mt='8' onClick={onOpen}>
-        Clear All
+        {buttonText}
+        <FiTrash2 />
       </Button>
       <ModalDialog
         isOpen={isOpen}
         onClose={onClose}
-        headerText='Are you sure you want to delete all items?'
-        onSubmit={handleDeleteAll}
+        headerText={headerText}
+        onSubmit={handleDelete}
         isLoading={isLoading}
         cancelButtonText='Cancel'
         submitButtonText='Delete All'
       >
-        <p>Are you sure you want to delete all items?</p>
+        <Text>are you sure?</Text>
       </ModalDialog>
     </>
   );

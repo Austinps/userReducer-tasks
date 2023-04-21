@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useTask } from './contexts/TaskContext';
 import { useTaskStorage } from '../hooks/useTaskStorage';
-import { Home, Profile, UserLists } from './views';
-import ListById from './views/ListById';
+import { Landing, Profile, UserLists, ListDetail } from './views';
 import { setTasks } from './store/taskActions';
 
 export default function App() {
@@ -17,8 +16,8 @@ export default function App() {
 
   return (
     <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/lists/:id' element={<ListById />} />
+      <Route path='/' element={<Landing />} />
+      <Route path='/lists/:id' element={<ListDetail />} />
       <Route path='/profile' element={<Profile />} />
       <Route path='/task-lists' element={<UserLists />} />
     </Routes>

@@ -89,6 +89,16 @@ const taskReducer = (state = [], { type, payload }) => {
           : list
       );
 
+    case ACTIONS.DELETE_DONE_TASKS:
+      return state.map((list) =>
+        list.id === payload.listId
+          ? {
+              ...list,
+              tasks: list.tasks.filter((task) => task.check === false),
+            }
+          : list
+      );
+
     case ACTIONS.DELETE_ALL_TASKS:
       return state.map((list) =>
         list.id === payload.listId

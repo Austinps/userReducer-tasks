@@ -1,27 +1,9 @@
-import {
-  Box,
-  VStack,
-  Flex,
-  StackDivider,
-  Center,
-} from '@chakra-ui/react';
-import { useTask } from '../../contexts/TaskContext';
-import { useActiveList } from '../../contexts/activeListContext';
+import { Box, VStack, Flex, StackDivider, Center } from '@chakra-ui/react';
 import TaskItem from './TaskItem';
-import DeleteAll from './DeleteAll';
-import { ACTIONS } from '../../store/constants';
+import { deleteAllTasks, deleteDoneTasks } from '../../store/taskActions';
+import DeleteMultipleTasks from './DeleteMultipleTasks';
 
 export default function TaskList({ tasks, listIndex }) {
-  const { dispatch } = useTask();
-  const { activeListId } = useActiveList();
-
-  function deleteAllHandler() {
-    dispatch({
-      type: ACTIONS.DELETE_ALL_TASKS,
-      payload: { listId: activeListId },
-    });
-  }
-
   return tasks.length ? (
     <VStack
       divider={<StackDivider />}
@@ -36,8 +18,17 @@ export default function TaskList({ tasks, listIndex }) {
       {tasks.map((item) => (
         <TaskItem task={item} key={item.id} listIndex={listIndex} />
       ))}
-      <Flex>
-        <DeleteAll deleteAllHandler={deleteAllHandler} />
+      <Flex justifyContent={'space-between'}>
+        <DeleteMultipleTasks
+          action={deleteDoneTasks}
+          headerText={'Delete completed tasks?'}
+          buttonText={'done'}
+        />
+        <DeleteMultipleTasks
+          action={deleteAllTasks}
+          headerText={'Delete all tasks?'}
+          buttonText={'all'}
+        />
       </Flex>
     </VStack>
   ) : (

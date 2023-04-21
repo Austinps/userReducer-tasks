@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import TextField from './List/TextField';
-import TypeField from './List/TypeField';
-import { INITIAL_STATE_TYPE } from '../utils/constants';
+import TextField from './TextField';
+import TypeField from './TypeField';
+import { INITIAL_STATE_TYPE } from '../../utils/constants';
 
 export default function ListModalBody({ onChangeName }) {
   const [name, setName] = useState('');

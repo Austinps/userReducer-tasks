@@ -10,7 +10,7 @@ import { useTask } from '../../contexts/TaskContext';
 import { useActiveList } from '../../contexts/activeListContext';
 import { FiEdit } from 'react-icons/fi';
 import { updateTask } from '../../store/taskActions';
-import ModalDialog from '../ModalDialog';
+import ModalDialog from '../Modal/ModalDialog';
 import { updateToastConfig } from '../../utils/toastConfig';
 
 export default function UpdateTask({ task }) {
