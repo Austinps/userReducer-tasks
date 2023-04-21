@@ -19,7 +19,6 @@ export default function UpdateListForm({ list }) {
     type,
     setType,
     isNameInvalid,
-    setIsNameInvalid,
     resetForm,
     handleBlur,
   } = useUpdateListForm({ onClose, isOpen, onOpen, list });

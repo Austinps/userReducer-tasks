@@ -1,6 +1,8 @@
 import { Box, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import DeleteList from './DeleteList';
+import UpdateList from './UpdateList';
 
 export default function ListItem({ list }) {
   return (
@@ -15,6 +17,8 @@ export default function ListItem({ list }) {
       <Text>
         Completed Tasks: {list.tasks.filter((task) => task.check).length}
       </Text>
+      <DeleteList list={list} />
+      <UpdateList list={list} />
     </Box>
   );
 }

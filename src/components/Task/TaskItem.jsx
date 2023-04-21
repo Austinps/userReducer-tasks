@@ -1,12 +1,11 @@
 import { memo } from 'react';
 import { HStack, Text } from '@chakra-ui/react';
 import { CalendarIcon, CheckIcon } from '@chakra-ui/icons';
-import DeleteOne from './DeleteOne';
+import DeleteTask from './DeleteTask';
 import UpdateTask from './UpdateTask';
 import { useTask } from '../../contexts/TaskContext';
-
 import { useActiveList } from '../../contexts/activeListContext';
-import { toggleTask, deleteTask } from '../../store/taskActions';
+import { toggleTask } from '../../store/taskActions';
 
 function TaskItem({ task, listIndex }) {
   const { dispatch } = useTask();
@@ -14,10 +13,6 @@ function TaskItem({ task, listIndex }) {
 
   const handleToggleTask = () => {
     dispatch(toggleTask(activeListId, task.id));
-  };
-
-  const handleDeleteTask = (id) => {
-    dispatch(deleteTask(listIndex, id));
   };
 
   return (
@@ -33,7 +28,7 @@ function TaskItem({ task, listIndex }) {
       >
         {task.body}
       </Text>
-      <DeleteOne task={task} />
+      <DeleteTask task={task} />
       <UpdateTask task={task} listIndex={listIndex} />
     </HStack>
   );

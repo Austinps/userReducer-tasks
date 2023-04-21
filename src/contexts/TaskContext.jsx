@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer } from 'react';
 import taskReducer from '../store/TaskReducer';
-import { dummyData } from '../data/dummyData';
+import { useTaskStorage } from '../../hooks/useTaskStorage';
 
 const taskContext = createContext({
   tasks: [],
@@ -8,8 +8,10 @@ const taskContext = createContext({
 });
 
 export const TaskProvider = React.memo(({ children }) => {
-  const [tasks, dispatch] = useReducer(taskReducer, dummyData);
+  const [tasks, dispatch] = useReducer(taskReducer, []);
+  useTaskStorage(tasks);
 
+  console.log('context', tasks);
   return (
     <taskContext.Provider value={{ tasks, dispatch }}>
       {children}

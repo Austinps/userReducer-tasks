@@ -1,5 +1,10 @@
 import { ACTIONS } from './constants';
 
+export const setTasks = (tasks) => ({
+  type: ACTIONS.SET_TASKS,
+  payload: tasks || [],
+});
+
 export const createList = (body) => ({
   type: ACTIONS.CREATE_LIST,
   payload: { ...body },
@@ -8,6 +13,11 @@ export const createList = (body) => ({
 export const updateList = (body, listId) => ({
   type: ACTIONS.UPDATE_LIST,
   payload: { ...body, listId: listId },
+});
+
+export const deleteList = (listId) => ({
+  type: ACTIONS.DELETE_LIST,
+  payload: { listId },
 });
 
 export const addTask = (task, listId) => ({
@@ -28,11 +38,6 @@ export const toggleTask = (listId, taskId) => ({
 export const deleteTask = (listId, taskId) => ({
   type: ACTIONS.DELETE_TASK,
   payload: { listId, taskId },
-});
-
-export const deleteList = ({ id }) => ({
-  type: ACTIONS.DELETE_LIST,
-  payload: { id },
 });
 
 export const clearList = ({ id }) => ({

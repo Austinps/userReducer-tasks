@@ -4,7 +4,6 @@ import {
   Flex,
   StackDivider,
   Center,
-  Button,
 } from '@chakra-ui/react';
 import { useTask } from '../../contexts/TaskContext';
 import { useActiveList } from '../../contexts/activeListContext';

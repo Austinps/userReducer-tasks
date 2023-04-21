@@ -1,9 +1,14 @@
 import { nanoid } from 'nanoid';
 import { ACTIONS } from './constants';
-import { dummyData } from '../data/dummyData';
-
-const taskReducer = (state = dummyData, { type, payload }) => {
+const taskReducer = (state = [], { type, payload }) => {
   switch (type) {
+    case ACTIONS.SET_TASKS:
+      const existingTasks = state.map((task) => task.id);
+      const newTasks = payload.filter(
+        (task) => !existingTasks.includes(task.id)
+      );
+      return [...state, ...newTasks];
+
     case ACTIONS.CREATE_LIST:
       return [
         ...state,
@@ -25,6 +30,9 @@ const taskReducer = (state = dummyData, { type, payload }) => {
             }
           : list
       );
+
+    case ACTIONS.DELETE_LIST:
+      return state.filter((list) => list.id !== payload.listId);
 
     case ACTIONS.ADD_TASK:
       return state.map((list) =>

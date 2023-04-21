@@ -1,17 +1,20 @@
-import { Button, useDisclosure, useToast } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useDisclosure, IconButton } from '@chakra-ui/react';
+import { FiEdit } from 'react-icons/fi';
 import ModalDialog from '../ModalDialog';
+import { useActiveList } from '../../contexts/activeListContext';
 import TextField from './TextField';
 import TypeField from './TypeField';
-import { CREATE_LIST_HEADER, INITIAL_STATE_TYPE } from '../../utils/constants';
-import useCreateListForm from '../../hooks/useCreateListForm';
+import useUpdateListForm from '../../hooks/useUpdateListForm';
+import { INITIAL_STATE_TYPE, UPDATE_LIST_HEADER } from '../../utils/constants';
 
-export default function CreateListForm({ children, fn }) {
+export default function UpdateList({ list }) {
+  const { setActiveListId } = useActiveList();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const {
     isLoading,
-    handleSubmit,
+    handleUpdate,
+    handleEdit,
     name,
     setName,
     type,
@@ -19,7 +22,7 @@ export default function CreateListForm({ children, fn }) {
     isNameInvalid,
     resetForm,
     handleBlur,
-  } = useCreateListForm({ onClose });
+  } = useUpdateListForm({ onClose, isOpen, onOpen, list });
 
   useEffect(() => {
     if (!isOpen) {
@@ -29,11 +32,12 @@ export default function CreateListForm({ children, fn }) {
 
   return (
     <>
+      <IconButton icon={<FiEdit />} isRound onClick={handleEdit} />
       <ModalDialog
         isOpen={isOpen}
         onClose={onClose}
-        headerText={CREATE_LIST_HEADER}
-        onSubmit={() => handleSubmit(name, type, resetForm)}
+        headerText={UPDATE_LIST_HEADER}
+        onSubmit={() => handleUpdate(name, type, resetForm)}
         isLoading={isLoading}
         onOpen={() => {
           setName('');
@@ -47,15 +51,7 @@ export default function CreateListForm({ children, fn }) {
           isInvalid={isNameInvalid}
         />
         <TypeField value={type} onChange={(e) => setType(e.target.value)} />
-      </ModalDialog>{' '}
-      <Button onClick={onOpen} colorScheme='blue'>
-        Create List
-      </Button>
-      {children}
+      </ModalDialog>
     </>
   );
 }
-
-CreateListForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

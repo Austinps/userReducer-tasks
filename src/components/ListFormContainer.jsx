@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import ModalDialog from '../ModalDialog';
 import TextField from './List/TextField';
 import TypeField from './List/TypeField';
-import { CREATE_LIST_HEADER, INITIAL_STATE_TYPE } from '../../utils/constants';
 
 function ListFormContainer({
   onSubmit,

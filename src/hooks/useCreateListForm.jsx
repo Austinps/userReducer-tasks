@@ -64,7 +64,6 @@ export default function useCreateListForm({ onClose }) {
     type,
     setType,
     isNameInvalid,
-    setIsNameInvalid,
     resetForm,
     handleBlur,
   };

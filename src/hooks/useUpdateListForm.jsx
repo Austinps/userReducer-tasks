@@ -8,8 +8,7 @@ import { INITIAL_STATE_TYPE } from '../utils/constants';
 
 export default function useUpdateListForm({ onClose, isOpen, onOpen, list }) {
   const toast = useToast();
-  const { tasks, dispatch } = useTask();
-  const { activeListId } = useActiveList();
+  const { dispatch } = useTask();
 
   const [name, setName] = useState('');
   const [type, setType] = useState(INITIAL_STATE_TYPE);
@@ -53,7 +52,7 @@ export default function useUpdateListForm({ onClose, isOpen, onOpen, list }) {
     };
     setIsLoading(true);
     try {
-      await dispatch(updateList(updatedList, activeListId));
+      await dispatch(updateList(updatedList, list.id));
       toast(updateToastConfig.success);
     } catch (err) {
       console.error(err);
@@ -73,7 +72,7 @@ export default function useUpdateListForm({ onClose, isOpen, onOpen, list }) {
     type,
     setType,
     isNameInvalid,
-    setIsNameInvalid,
     resetForm,
+    handleBlur,
   };
 }

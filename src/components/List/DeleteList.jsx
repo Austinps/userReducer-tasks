@@ -1,25 +1,22 @@
 import { useState } from 'react';
 import { Text, useDisclosure, IconButton, useToast } from '@chakra-ui/react';
 import { FiTrash2 } from 'react-icons/fi';
-import PropTypes from 'prop-types'; // Import PropTypes for prop type validation
+import PropTypes from 'prop-types';
 import { useTask } from '../../contexts/TaskContext';
-import { useActiveList } from '../../contexts/activeListContext';
-import { deleteTask } from '../../store/taskActions';
+import { deleteList } from '../../store/taskActions';
 import ModalDialog from '../ModalDialog';
 import { deleteToastConfig } from '../../utils/toastConfig';
 
-export default function DeleteOne({ task }) {
+export default function DeleteList({ list }) {
   const toast = useToast();
   const { dispatch } = useTask();
-  const { activeListId } = useActiveList();
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleDeleteTask = async () => {
+  const handleDeleteList = async () => {
     setIsLoading(true);
     try {
-      await dispatch(deleteTask(activeListId, task.id));
+      await dispatch(deleteList(list.id));
       toast(deleteToastConfig.success);
       onClose();
     } catch (err) {
@@ -32,22 +29,20 @@ export default function DeleteOne({ task }) {
 
   return (
     <>
-      <IconButton icon={<FiTrash2 />} isRound onClick={onOpen} />{' '}
+      <IconButton icon={<FiTrash2 />} isRound onClick={onOpen} />
       <ModalDialog
         isOpen={isOpen}
         onClose={onClose}
-        headerText='delete task?'
-        onSubmit={handleDeleteTask}
+        headerText='delete this list?'
+        onSubmit={handleDeleteList}
         isLoading={isLoading}
       >
-        {' '}
-        <Text>{task.body}</Text>
+        <Text>{list.name}</Text>
       </ModalDialog>
     </>
   );
 }
 
-// Add prop type validation for task prop
-DeleteOne.propTypes = {
-  task: PropTypes.object.isRequired, // Update with the correct prop type
+DeleteList.propTypes = {
+  list: PropTypes.object.isRequired,
 };

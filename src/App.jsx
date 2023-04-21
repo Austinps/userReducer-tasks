@@ -1,14 +1,19 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useTask } from './contexts/TaskContext';
 import { useTaskStorage } from '../hooks/useTaskStorage';
 import { Home, Profile, UserLists } from './views';
 import ListById from './views/ListById';
+import { setTasks } from './store/taskActions';
 
 export default function App() {
-  const { tasks } = useTask();
-  console.log('state', tasks);
+  const { tasks, dispatch } = useTask();
   useTaskStorage(tasks);
+
+  useEffect(() => {
+    const tasks = JSON.parse(localStorage.getItem('tasks'));
+    dispatch(setTasks(tasks));
+  }, [dispatch]);
 
   return (
     <Routes>
