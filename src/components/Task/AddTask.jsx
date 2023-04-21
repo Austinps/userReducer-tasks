@@ -1,15 +1,23 @@
 import { useState, useCallback } from 'react';
-import { Button, HStack, Input, useToast } from '@chakra-ui/react';
+import { Button, HStack, Input, Spinner, useToast } from '@chakra-ui/react';
 import { addTask } from '../../store/taskActions';
 import { useTask } from '../../contexts/TaskContext';
 import { useActiveList } from '../../contexts/activeListContext';
 import { addToastConfig } from '../../utils/toastConfig';
+import TextField from '../List/TextField';
+import SubmitButton from '../SubmitButton';
 
 function AddTask() {
   const { dispatch } = useTask();
   const { activeListId } = useActiveList();
   const toast = useToast();
   const [body, setBody] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [isNameInvalid, setIsNameInvalid] = useState(false);
+
+  const handleBlur = useCallback(() => {
+    setIsNameInvalid(!body?.trim());
+  }, [body]);
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -18,6 +26,7 @@ function AddTask() {
         setBody('');
         return toast(addToastConfig.invalidName);
       }
+      setIsLoading(true);
       try {
         await dispatch(addTask({ body: body.trim() }, activeListId));
         toast(addToastConfig.success);
@@ -25,6 +34,9 @@ function AddTask() {
       } catch (error) {
         console.error(error);
         toast(addToastConfig.error);
+      } finally {
+        setIsNameInvalid(false);
+        setIsLoading(false);
       }
     },
     [activeListId, body, dispatch, toast]
@@ -33,25 +45,14 @@ function AddTask() {
   return (
     <form onSubmit={handleSubmit}>
       <HStack mt='4' mb='4'>
-        <Input
-          isInvalid={!body?.trim()}
-          variant='filled'
-          placeholder='add task'
+        <TextField
           value={body}
           onChange={(e) => setBody(e.target.value)}
+          onBlur={handleBlur}
+          isInvalid={isNameInvalid}
+          headerText='New task'
         />
-
-        <Button
-          bgGradient='linear(to-br, #228be6, #15aabf)'
-          color='white'
-          _hover={{ bgGradient: 'linear(to-br, #228be6, #228be6)' }}
-          variant='solid'
-          size='lg'
-          fontWeight='bold'
-          type='submit'
-        >
-          Add
-        </Button>
+        <SubmitButton text='Add' isLoading={isLoading} />
       </HStack>
     </form>
   );
