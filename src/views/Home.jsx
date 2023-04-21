@@ -1,31 +1,13 @@
 import PropTypes from 'prop-types';
-import { Select } from '@chakra-ui/react';
-import SingleList from '../components/Task/SingleList';
-import { useTask } from '../contexts/TaskContext';
-import { useActiveList } from '../contexts/activeListContext';
+import { VStack } from '@chakra-ui/react';
+import ListDetail from '../components/Task/SingleList';
 
 function Home() {
-  const { activeListId, setActiveListId } = useActiveList();
-  const { tasks = [] } = useTask();
-
-  const handleIndexChange = ({ target: { value } }) => {
-    setActiveListId(value);
-  };
-
   return (
     <>
-      <Select
-        value={activeListId}
-        onChange={handleIndexChange}
-        placeholder='Select a List'
-      >
-        {tasks.map((list) => (
-          <option key={list.id} value={list.id}>
-            {list.name}
-          </option>
-        ))}
-      </Select>
-      <SingleList />
+      <VStack w='80%'>
+        <ListDetail />
+      </VStack>
     </>
   );
 }

@@ -1,55 +1,61 @@
-import { Button, useToast } from '@chakra-ui/react';
-import { useState, useCallback } from 'react';
-import { updateList } from '../../store/taskActions';
-import { useTask } from '../../contexts/TaskContext';
-import { useActiveList } from '../../contexts/activeListContext';
-import { updateListToastConfig } from '../../utils/toastConfig';
+import { useDisclosure } from '@chakra-ui/react';
+import { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import ModalDialog from '../ModalDialog';
 import TextField from './TextField';
 import TypeField from './TypeField';
-import { CREATE_LIST_HEADER } from '../../utils/constants';
+import { INITIAL_STATE_TYPE, UPDATE_LIST_HEADER } from '../../utils/constants';
+import useUpdateListForm from '../../hooks/useUpdateListForm';
+import ListHeader from '../ListHeader';
 
-export default function UpdateListForm({ onClose }) {
-  const toast = useToast();
-  const { tasks, dispatch } = useTask();
-  const { activeListId } = useActiveList();
-  const list = tasks.find(({ id }) => id === activeListId);
+export default function UpdateListForm({ list }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isLoading,
+    handleUpdate,
+    handleEdit,
+    name,
+    setName,
+    type,
+    setType,
+    isNameInvalid,
+    setIsNameInvalid,
+    resetForm,
+    handleBlur,
+  } = useUpdateListForm({ onClose, isOpen, onOpen, list });
 
-  const [name, setName] = useState(list.name);
-  const [type, setType] = useState(list.type);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isNameInvalid, setIsNameInvalid] = useState(false);
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+  }, [isOpen, resetForm]);
 
-  const handleBlur = useCallback(() => {
-    setIsNameInvalid(!name?.trim());
-  }, [name]);
-
-  const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
-      if (!name?.trim()) {
-        setIsNameInvalid(true);
-        return toast(updateListToastConfig.invalidName);
-      }
-      const updatedList = {
-        ...list,
-        name,
-        type,
-      };
-      setIsLoading(true);
-      try {
-        await dispatch(updateList(updatedList, activeListId));
-        toast(updateListToastConfig.success);
-      } catch (err) {
-        console.error(err);
-        toast(updateListToastConfig.error);
-      } finally {
-        setIsLoading(false);
-        onClose();
-      }
-    },
-    [dispatch, list, name, onClose, toast, type]
+  return (
+    <>
+      <ModalDialog
+        isOpen={isOpen}
+        onClose={onClose}
+        headerText={UPDATE_LIST_HEADER}
+        onSubmit={() => handleUpdate(name, type, resetForm)}
+        isLoading={isLoading}
+        onOpen={() => {
+          setName('');
+          setType(INITIAL_STATE_TYPE);
+        }}
+      >
+        <TextField
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onBlur={handleBlur}
+          isInvalid={isNameInvalid}
+        />
+        <TypeField value={type} onChange={(e) => setType(e.target.value)} />
+      </ModalDialog>
+      <ListHeader list={list} action={handleEdit} />
+    </>
   );
-
-  return <h1>dfgd</h1>;
 }
+
+UpdateListForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

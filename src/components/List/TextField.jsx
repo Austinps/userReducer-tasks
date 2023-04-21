@@ -6,11 +6,25 @@ export default function TextField({
   onChange,
   onBlur,
   isInvalid,
+  placeholder = 'type something',
 }) {
   return (
     <FormControl isInvalid={isInvalid}>
-      <FormLabel>{headerText}</FormLabel>
-      <Input type='text' value={value} onChange={onChange} onBlur={onBlur} />
+      <FormLabel
+        as='label'
+        htmlFor='type-select'
+        position='absolute'
+        left='-9999px'
+      >
+        {headerText}
+      </FormLabel>
+      <Input
+        type='text'
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+        placeholder={placeholder}
+      />
     </FormControl>
   );
 }

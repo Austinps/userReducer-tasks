@@ -51,8 +51,9 @@ function AddTask() {
           onBlur={handleBlur}
           isInvalid={isNameInvalid}
           headerText='New task'
+          placeholder='add new task'
         />
-        <SubmitButton text='Add' isLoading={isLoading} />
+        <SubmitButton text='+' isLoading={isLoading} />
       </HStack>
     </form>
   );

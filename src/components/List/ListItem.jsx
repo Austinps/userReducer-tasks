@@ -1,12 +1,16 @@
 import { Box, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 export default function ListItem({ list }) {
   return (
     <Box>
-      <Text fontSize='xl' fontWeight='bold'>
-        {list.name}
-      </Text>
+      <Link to={`/lists/${list.id}`}>
+        {' '}
+        <Text fontSize='xl' fontWeight='bold'>
+          {list.name}
+        </Text>
+      </Link>
       <Text>Total Tasks: {list.tasks.length}</Text>
       <Text>
         Completed Tasks: {list.tasks.filter((task) => task.check).length}

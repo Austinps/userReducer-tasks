@@ -6,9 +6,12 @@ import {
   Link,
   useColorMode,
   useColorModeValue,
+  HStack,
 } from '@chakra-ui/react';
 import ProfileMenu from './ProfileMenu';
 import { FaSun, FaMoon } from 'react-icons/fa';
+import ListSelect from './ListSelect';
+import CreateListForm from '../List/CreateListForm';
 
 export default function NavBar() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -29,7 +32,12 @@ export default function NavBar() {
       >
         <Link as={NavLink} to='/' fontWeight='bold' fontSize='lg'>
           Task
-        </Link>
+        </Link>{' '}
+        <HStack align={'center'}>
+          {' '}
+          <ListSelect />
+          <CreateListForm />
+        </HStack>
         <Flex alignItems='center'>
           <ProfileMenu />
           <IconButton

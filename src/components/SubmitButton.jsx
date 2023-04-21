@@ -7,7 +7,7 @@ function SubmitButton({ text, isLoading }) {
       color='white'
       _hover={{ bgGradient: 'linear(to-br, #228be6, #228be6)' }}
       variant='solid'
-      size='lg'
+      size='md'
       fontWeight='bold'
       type='submit'
       disabled={isLoading}
