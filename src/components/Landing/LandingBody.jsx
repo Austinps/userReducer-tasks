@@ -50,8 +50,7 @@ export default function LandingBody() {
           We're on a mission to make <br /> building lists more accessible
         </Heading>
         <Text maxW='500px' fontSize='lg' textAlign='center' color='gray.500'>
-          Our mission is to empower anyone to build lists, faster. We're
-          reducing the entry barrier, making listing accessible for all.
+          A simple list app to practice using useReducer hook in React.
         </Text>
       </Stack>
       <Stack spacing={5} alignItems='center' mb={8}>
